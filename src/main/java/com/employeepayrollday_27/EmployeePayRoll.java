@@ -1,9 +1,26 @@
 package com.employeepayrollday_27;
 
 public class EmployeePayRoll {
+
+	int id, salary;
+	String name;
 	
-    public static void main( String[] args ) {
-    	
-        System.out.println( "Welcome to Employee Pay Roll" );
+	public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return id;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setSalary(int salary){
+        this.salary = salary;
+    }
+    public int getSalary(){
+        return salary;
     }
 }
