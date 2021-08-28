@@ -1,5 +1,6 @@
 package com.employeepayrollday_27;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,8 +34,15 @@ public class EmployeePayRollMain {
 	}
     public static void main( String[] args ) {
     	
-    	EmployeePayRollMain payRoll = new EmployeePayRollMain();
-    	payRoll.readEmpPayRollData();
-    	payRoll.writeEmpPayRollData();
+//    	EmployeePayRollMain payRoll = new EmployeePayRollMain();
+//    	payRoll.readEmpPayRollData();
+//    	payRoll.writeEmpPayRollData();
+    	
+    	FileOperations file = new FileOperations();
+    	try {
+			file.checkFileOperations();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
