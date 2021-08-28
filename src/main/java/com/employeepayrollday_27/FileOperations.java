@@ -22,7 +22,7 @@ public class FileOperations {
 		if(Files.exists(filePath)) {
 			
 			FileUtils.deleteQuietly(filePath.toFile());
-			System.out.print("File deleted");
+			System.out.print("\nFile deleted");
 		}
 		
 		//create file if it does not exists
