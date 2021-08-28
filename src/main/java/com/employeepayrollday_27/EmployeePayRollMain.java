@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class EmployeePayRollMain {
 	
 	ArrayList<EmployeePayRoll> empList = new ArrayList<>();
 	public static String myFolder = "EmpPayRoll";
 	
+	//read from console
 	public void readEmpPayRollData() {
 		
 		EmployeePayRoll emp = new EmployeePayRoll();
@@ -27,6 +30,7 @@ public class EmployeePayRollMain {
 		emp.setSalary(salary);
 		empList.add(emp);
 	}
+	//write into console
 	public void writeEmpPayRollData() {
 		
 		for(EmployeePayRoll emp : empList) {
@@ -36,6 +40,7 @@ public class EmployeePayRollMain {
 			System.out.print( "\nEmployee Salary : " + emp.getSalary());
 		}
 	}
+	
 	public void writeDataIntoFile() throws IOException {
 		
 		Path filePath = Paths.get(myFolder+"\\employeeFile.txt");
@@ -51,14 +56,38 @@ public class EmployeePayRollMain {
 			payRollBuffer.append(payRollString);
 		});
 		try {
-    		
-    		Files.write(filePath,payRollBuffer.toString().getBytes());
+    		//
+    		Files.write(filePath,payRollBuffer.toString().getBytes(),StandardOpenOption.APPEND);
     		
     	}catch(IOException e) {
     		System.out.print("Unable to write Payroll details into file" + e.getMessage());
     	}
 		System.out.print("\nNumber of entries in file : " + Files.lines(filePath).count());
 	}
+	
+	public void readDataFromFile() {
+		
+		Path filePath = Paths.get(myFolder+"\\employeeFile.txt");
+		try {
+			
+//			String readData = Files.readAllLines(filePath).get(0);
+			int lineCount = (int)Files.lines(filePath).count();
+			IntStream.range(0,lineCount).forEach(count -> {
+				try {
+					
+					String readData = Files.readAllLines(filePath).get(count);
+					System.out.print("\nEmployee Payroll data : " + readData);
+					
+				}catch(IOException e) {
+		    		System.out.print("Error" + e.getMessage());
+		    	}
+			});
+			
+		}catch(IOException e) {
+    		System.out.print("Unable to read Payroll details from file" + e.getMessage());
+    	}
+	}
+	
     public static void main( String[] args ) {
     	
     	EmployeePayRollMain payRoll = new EmployeePayRollMain();
@@ -67,13 +96,16 @@ public class EmployeePayRollMain {
     	try {
     		payRoll.writeDataIntoFile();
     	}catch(IOException e) {
-    		System.out.print("Unable to write Payroll details into file" + e.getMessage());
+    		System.out.print("Error" + e.getMessage());
     	}
-    	FileOperations file = new FileOperations();
-    	try {
-			file.checkFileOperations();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	
+    	payRoll.readDataFromFile();
+    	
+//    	FileOperations file = new FileOperations();
+//    	try {
+//			file.checkFileOperations();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
     }
 }
